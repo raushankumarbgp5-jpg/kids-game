@@ -3,301 +3,525 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kids Brain & Fun Zone 🚀</title>
+    <title>Super Kids Sound & Fun Hub 🚀</title>
     <style>
         :root {
-            --primary: #FF6B6B;
-            --secondary: #4ECDC4;
-            --accent: #FFE66D;
-            --bg: #F7FFF7;
-            --text: #2C3E50;
+            --primary: #FF5722;
+            --secondary: #00BCD4;
+            --accent: #FFEB3B;
+            --bg: #F4F7F6;
+            --dark: #2C3E50;
         }
 
         body {
-            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', sans-serif;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
             background-color: var(--bg);
-            color: var(--text);
+            color: var(--dark);
             text-align: center;
             margin: 0;
-            padding: 20px;
+            padding: 10px;
         }
 
         h1 {
             color: var(--primary);
-            font-size: 2.5em;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            font-size: 2.2em;
+            margin: 10px 0;
         }
 
-        .nav-buttons {
-            margin-bottom: 30px;
+        .category-menu {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
         }
 
-        button {
+        .cat-btn {
             background-color: var(--secondary);
             color: white;
             border: none;
-            padding: 15px 30px;
-            font-size: 1.2em;
+            padding: 10px 16px;
+            font-size: 0.95em;
             font-weight: bold;
-            border-radius: 50px;
-            cursor: pointer;
-            margin: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            transition: transform 0.2s, background-color 0.2s;
-        }
-
-        button:hover {
-            transform: scale(1.1);
-            background-color: #45b7d1;
-        }
-
-        button.active {
-            background-color: var(--primary);
-        }
-
-        /* Section Styles */
-        .section {
-            display: none;
-            background: white;
-            padding: 30px;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .cat-btn.active {
+            background-color: var(--primary);
+            transform: scale(1.05);
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
             max-width: 600px;
             margin: 0 auto;
         }
 
-        .section.active {
+        .tab-section {
+            display: none;
+        }
+
+        .tab-section.active {
             display: block;
-            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        @keyframes popIn {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        /* Memory Game Styles */
+        /* Match Game Grid */
         .grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            margin-top: 20px;
+            gap: 10px;
+            margin-top: 15px;
         }
 
         .card {
             background-color: var(--accent);
-            height: 100px;
-            border-radius: 15px;
+            height: 75px;
+            border-radius: 12px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 3em;
+            font-size: 1.8em;
+            font-weight: bold;
             cursor: pointer;
-            transition: transform 0.3s;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            user-select: none;
+            transition: transform 0.2s;
         }
 
         .card.flipped {
-            background-color: white;
+            background-color: #E0F7FA;
             transform: rotateY(180deg);
         }
 
-        /* Mind Task Styles */
-        #color-word {
-            font-size: 4em;
-            font-weight: bold;
-            margin: 40px 0;
-            text-transform: uppercase;
+        /* Tracing Section */
+        #tracing-canvas {
+            border: 3px dashed #00BCD4;
+            border-radius: 15px;
+            background-color: #FFFFFF;
+            cursor: crosshair;
+            touch-action: none;
         }
 
-        .color-options {
+        .letter-controls {
             display: flex;
             justify-content: center;
+            align-items: center;
             gap: 15px;
-            flex-wrap: wrap;
+            margin: 15px 0;
         }
 
-        .color-btn {
-            padding: 15px 25px;
-            font-size: 1.2em;
-            border-radius: 10px;
-            background-color: #ecf0f1;
-            color: #333;
-        }
-
-        #task-score {
-            font-size: 1.5em;
+        .letter-display {
+            font-size: 2.5em;
+            font-weight: bold;
             color: var(--primary);
-            margin-top: 20px;
+        }
+
+        /* Color Confusion Task */
+        #color-word {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .opt-btn {
+            padding: 12px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+            background: #fff;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .score-bar {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--primary);
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
 
-    <h1>🚀 Kids Brain & Fun Zone 🎮</h1>
+    <h1>🌟 Kids Fun & Sound Zone 🚀</h1>
 
-    <div class="nav-buttons">
-        <button id="btn-game" class="active" onclick="showSection('game')">🎮 Simple Game</button>
-        <button id="btn-task" onclick="showSection('task')">🧠 Mind Blowing Task</button>
+    <div class="category-menu">
+        <button class="cat-btn active" onclick="loadMatchCategory('animals')">🦁 Animals</button>
+        <button class="cat-btn" onclick="loadMatchCategory('flowers')">🌸 Flowers</button>
+        <button class="cat-btn" onclick="loadMatchCategory('numbers')">🔢 Numbers</button>
+        <button class="cat-btn" onclick="loadMatchCategory('toys')">🧸 Toys</button>
+        <button class="cat-btn" onclick="loadMatchCategory('words')">🔤 Hindi-Eng</button>
+        <button class="cat-btn" onclick="openSection('tracing')">✏️ A-Z Trace</button>
+        <button class="cat-btn" onclick="openSection('color-task')">🧠 Color Brain</button>
     </div>
 
-    <!-- Section 1: Simple Game (Memory Match) -->
-    <div id="game-section" class="section active">
-        <h2>Emoji Memory Match 🕵️‍♂️</h2>
-        <p>एक जैसे दो इमोजी ढूँढो! (Find the matching pairs)</p>
-        <div class="grid" id="memory-grid"></div>
-        <button onclick="initMemoryGame()" style="margin-top: 20px; font-size: 1em; padding: 10px 20px;">🔄 Restart Game</button>
+    <!-- Section 1: Matching Game -->
+    <div id="section-match" class="container tab-section active">
+        <h2 id="match-title">Animal Match 🦁</h2>
+        <p>Same pairs ko aapas me match karein!</p>
+        <div class="score-bar">Score: <span id="match-score">0</span></div>
+        <div class="grid" id="match-grid"></div>
+        <button class="cat-btn" style="margin-top: 15px;" onclick="initMatchGame()">🔄 Restart Match</button>
     </div>
 
-    <!-- Section 2: Mind Task (Stroop Effect) -->
-    <div id="task-section" class="section">
-        <h2>Brain Teaser: Color Confusion 🤯</h2>
-        <p><strong>नियम:</strong> जो रंग <em>दिख</em> रहा है उस पर क्लिक करें, शब्द को <em>पढ़ें</em> नहीं!</p>
-        <div id="color-word">लाल</div>
-        <div class="color-options" id="color-options">
-            <!-- Buttons will be generated by JS -->
+    <!-- Section 2: Alphabet Tracing & Line Connect -->
+    <div id="section-tracing" class="container tab-section">
+        <h2>Alphabet Connect & Trace (A to Z) ✏️</h2>
+        <p>Dots ko connect karein aur letter trace karein!</p>
+        
+        <div class="letter-controls">
+            <button class="cat-btn" onclick="changeLetter(-1)">◀ Prev</button>
+            <span class="letter-display" id="current-letter">A</span>
+            <button class="cat-btn" onclick="changeLetter(1)">Next ▶</button>
         </div>
-        <div id="task-score">Score: 0</div>
+
+        <canvas id="tracing-canvas" width="300" height="300"></canvas>
+
+        <div style="margin-top: 10px;">
+            <button class="cat-btn" style="background-color: #E74C3C;" onclick="clearCanvas()">🧹 Clear Board</button>
+        </div>
+    </div>
+
+    <!-- Section 3: Color Confusion Brain Task -->
+    <div id="section-color-task" class="container tab-section">
+        <h2>Mind Task: Color Confusion 🤯</h2>
+        <p><strong>Rule:</strong> Shabd mat padhein, jo <em>RANG</em> dikh raha hai use chuney!</p>
+        <div id="color-word">RED</div>
+        <div class="color-grid" id="color-options"></div>
+        <div class="score-bar">Score: <span id="color-score">0</span></div>
     </div>
 
     <script>
-        // --- Navigation Logic ---
-        function showSection(sectionName) {
-            document.getElementById('game-section').classList.remove('active');
-            document.getElementById('task-section').classList.remove('active');
-            document.getElementById('btn-game').classList.remove('active');
-            document.getElementById('btn-task').classList.remove('active');
+        // --- Web Audio Synthesizer (Realistic Sounds) ---
+        let audioCtx = null;
 
-            if(sectionName === 'game') {
-                document.getElementById('game-section').classList.add('active');
-                document.getElementById('btn-game').classList.add('active');
-                initMemoryGame();
-            } else {
-                document.getElementById('task-section').classList.add('active');
-                document.getElementById('btn-task').classList.add('active');
-                initMindTask();
+        function getAudioContext() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
         }
 
-        // --- Game 1: Memory Match Logic ---
-        const emojis = ['🐶', '🐱', '🐼', '🦊', '🦁', '🐸', '🐶', '🐱', '🐼', '🦊', '🦁', '🐸'];
-        let flippedCards = [];
-        let matchedPairs = 0;
+        // 1. Click / Flip Sound
+        function playClickSound() {
+            try {
+                let ctx = getAudioContext();
+                let osc = ctx.createOscillator();
+                let gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(400, ctx.currentTime);
+                gain.gain.setValueAtTime(0.1, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.08);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.08);
+            } catch(e) {}
+        }
 
-        function initMemoryGame() {
-            const grid = document.getElementById('memory-grid');
-            grid.innerHTML = '';
-            flippedCards = [];
-            matchedPairs = 0;
+        // 2. Sahi Answer Sound (High Double Chime / Ding-Ding 🎉)
+        function playCorrectSound() {
+            try {
+                let ctx = getAudioContext();
+                let now = ctx.currentTime;
+                
+                // First Note (C5)
+                let osc1 = ctx.createOscillator();
+                let gain1 = ctx.createGain();
+                osc1.type = 'sine';
+                osc1.frequency.setValueAtTime(523.25, now);
+                gain1.gain.setValueAtTime(0.2, now);
+                gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+                osc1.connect(gain1);
+                gain1.connect(ctx.destination);
+                osc1.start(now);
+                osc1.stop(now + 0.2);
+
+                // Second Higher Note (E5)
+                let osc2 = ctx.createOscillator();
+                let gain2 = ctx.createGain();
+                osc2.type = 'sine';
+                osc2.frequency.setValueAtTime(659.25, now + 0.12);
+                gain2.gain.setValueAtTime(0.3, now + 0.12);
+                gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+                osc2.connect(gain2);
+                gain2.connect(ctx.destination);
+                osc2.start(now + 0.12);
+                osc2.stop(now + 0.4);
+            } catch(e) {}
+        }
+
+        // 3. Galat Answer Sound (Low Buzzer Sound ❌)
+        function playWrongSound() {
+            try {
+                let ctx = getAudioContext();
+                let now = ctx.currentTime;
+                
+                let osc = ctx.createOscillator();
+                let gain = ctx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(180, now);
+                osc.frequency.linearRampToValueAtTime(110, now + 0.35); // Pitch drops down
+                
+                gain.gain.setValueAtTime(0.25, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+                
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(now);
+                osc.stop(now + 0.35);
+            } catch(e) {}
+        }
+
+        // --- Navigation ---
+        function openSection(secId) {
+            playClickSound();
+            document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
             
-            // Shuffle array
-            let shuffled = emojis.sort(() => 0.5 - Math.random());
+            document.getElementById('section-' + secId).classList.add('active');
+            event.target.classList.add('active');
 
-            shuffled.forEach((emoji, index) => {
+            if(secId === 'tracing') initTracing();
+            if(secId === 'color-task') initColorTask();
+        }
+
+        // --- Categories Match Data ---
+        const datasets = {
+            animals: ['🦁', '🐘', '🐯', '🐶', '🦊', '🐸'],
+            flowers: ['🌹', '🌻', '🌺', '🌸', '🌷', '🌼'],
+            numbers: ['1', '2', '3', '4', '5', '6'],
+            toys: ['🧸', '🚗', '⚽', '🎈', '🤖', '🧩'],
+            words: [
+                {id: 1, text: 'सेब'}, {id: 1, text: 'Apple'},
+                {id: 2, text: 'आम'}, {id: 2, text: 'Mango'},
+                {id: 3, text: 'बिल्ली'}, {id: 3, text: 'Cat'},
+                {id: 4, text: 'कुत्ता'}, {id: 4, text: 'Dog'},
+                {id: 5, text: 'सूरज'}, {id: 5, text: 'Sun'},
+                {id: 6, text: 'किताब'}, {id: 6, text: 'Book'}
+            ]
+        };
+
+        let currentCategory = 'animals';
+        let matchFlipped = [], matchScore = 0, matchedCount = 0;
+
+        function loadMatchCategory(cat) {
+            playClickSound();
+            currentCategory = cat;
+            document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('section-match').classList.add('active');
+            event.target.classList.add('active');
+            
+            let titles = {
+                animals: 'Animal Match 🦁',
+                flowers: 'Flower Match 🌸',
+                numbers: 'Number Match 🔢',
+                toys: 'Toy Match 🧸',
+                words: 'Hindi & English Word Match 🔤'
+            };
+            document.getElementById('match-title').innerText = titles[cat];
+            initMatchGame();
+        }
+
+        function initMatchGame() {
+            const grid = document.getElementById('match-grid');
+            grid.innerHTML = '';
+            matchFlipped = []; matchedCount = 0; matchScore = 0;
+            document.getElementById('match-score').innerText = matchScore;
+
+            let items = [];
+            if(currentCategory === 'words') {
+                items = [...datasets.words];
+            } else {
+                let raw = datasets[currentCategory];
+                items = raw.concat(raw).map((val, idx) => ({ id: val, text: val }));
+            }
+
+            items.sort(() => 0.5 - Math.random());
+
+            items.forEach((item, index) => {
                 let card = document.createElement('div');
                 card.className = 'card';
-                card.dataset.emoji = emoji;
-                card.dataset.index = index;
-                card.innerHTML = '❓';
-                card.onclick = () => flipCard(card);
+                card.dataset.id = item.id;
+                card.dataset.text = item.text;
+                card.innerText = '❓';
+                card.onclick = () => flipMatchCard(card);
                 grid.appendChild(card);
             });
         }
 
-        function flipCard(card) {
-            if (flippedCards.length < 2 && !card.classList.contains('flipped')) {
+        function flipMatchCard(card) {
+            if (matchFlipped.length < 2 && !card.classList.contains('flipped')) {
+                playClickSound();
                 card.classList.add('flipped');
-                card.innerHTML = card.dataset.emoji;
-                flippedCards.push(card);
+                card.innerText = card.dataset.text;
+                matchFlipped.push(card);
 
-                if (flippedCards.length === 2) {
-                    setTimeout(checkMatch, 800);
+                if (matchFlipped.length === 2) {
+                    if (matchFlipped[0].dataset.id === matchFlipped[1].dataset.id) {
+                        // Sahi Answer Sound!
+                        playCorrectSound();
+                        matchedCount++;
+                        matchScore += 10;
+                        document.getElementById('match-score').innerText = matchScore;
+                        matchFlipped = [];
+                        if (matchedCount === 6) alert('🎉 Mubarak ho! Aapne saare pairs match kar liye!');
+                    } else {
+                        // Galat Answer Sound!
+                        playWrongSound();
+                        setTimeout(() => {
+                            matchFlipped.forEach(c => { c.classList.remove('flipped'); c.innerText = '❓'; });
+                            matchFlipped = [];
+                        }, 800);
+                    }
                 }
             }
         }
 
-        function checkMatch() {
-            const [card1, card2] = flippedCards;
-            if (card1.dataset.emoji === card2.dataset.emoji) {
-                // Match found
-                matchedPairs++;
-                if (matchedPairs === 6) {
-                    alert('🎉 बधाई हो! तुमने गेम जीत लिया! 🎉');
-                }
-            } else {
-                // No match
-                card1.classList.remove('flipped');
-                card2.classList.remove('flipped');
-                card1.innerHTML = '❓';
-                card2.innerHTML = '❓';
-            }
-            flippedCards = [];
+        // --- Alphabet Tracing Canvas Logic ---
+        let alphabetIndex = 0;
+        const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+        let canvas, ctx, isDrawing = false;
+
+        function initTracing() {
+            canvas = document.getElementById('tracing-canvas');
+            ctx = canvas.getContext('2d');
+            
+            canvas.onmousedown = startDraw;
+            canvas.onmousemove = draw;
+            canvas.onmouseup = stopDraw;
+
+            canvas.ontouchstart = (e) => { startDraw(e.touches[0]); };
+            canvas.ontouchmove = (e) => { draw(e.touches[0]); e.preventDefault(); };
+            canvas.ontouchend = stopDraw;
+
+            renderLetterTracing();
         }
 
-        // --- Game 2: Mind Task Logic (Stroop Effect) ---
-        const colors = [
-            { name: 'लाल (Red)', hex: 'red' },
-            { name: 'नीला (Blue)', hex: 'blue' },
-            { name: 'हरा (Green)', hex: 'green' },
-            { name: 'पीला (Yellow)', hex: '#F1C40F' },
-            { name: 'काला (Black)', hex: 'black' }
-        ];
-        
-        let currentTargetColorHex = '';
-        let taskScore = 0;
-
-        function initMindTask() {
-            taskScore = 0;
-            updateScore();
-            nextTaskRound();
-            generateColorButtons();
+        function changeLetter(dir) {
+            playClickSound();
+            alphabetIndex += dir;
+            if(alphabetIndex < 0) alphabetIndex = 25;
+            if(alphabetIndex > 25) alphabetIndex = 0;
+            document.getElementById('current-letter').innerText = alphabets[alphabetIndex];
+            renderLetterTracing();
         }
 
-        function nextTaskRound() {
-            const wordObj = colors[Math.floor(Math.random() * colors.length)];
-            const colorObj = colors[Math.floor(Math.random() * colors.length)];
+        function renderLetterTracing() {
+            if(!ctx) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            const wordElement = document.getElementById('color-word');
-            wordElement.innerText = wordObj.name.split(' ')[0]; // Show Hindi word
-            wordElement.style.color = colorObj.hex; // Paint it with random color
-            
-            currentTargetColorHex = colorObj.hex; // Player must pick this color
-        }
+            ctx.font = "bold 200px Arial";
+            ctx.fillStyle = "#E0E0E0";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(alphabets[alphabetIndex], canvas.width/2, canvas.height/2 + 10);
 
-        function generateColorButtons() {
-            const optionsDiv = document.getElementById('color-options');
-            optionsDiv.innerHTML = '';
-            
-            colors.forEach(color => {
-                let btn = document.createElement('button');
-                btn.className = 'color-btn';
-                btn.innerText = color.name;
-                btn.onclick = () => checkMindTaskAnswer(color.hex);
-                optionsDiv.appendChild(btn);
+            ctx.fillStyle = "#FF5722";
+            let dots = [
+                {x: 80, y: 240},
+                {x: 150, y: 60},
+                {x: 220, y: 240}
+            ];
+            dots.forEach(d => {
+                ctx.beginPath();
+                ctx.arc(d.x, d.y, 8, 0, Math.PI * 2);
+                ctx.fill();
             });
         }
 
-        function checkMindTaskAnswer(selectedHex) {
-            if (selectedHex === currentTargetColorHex) {
-                taskScore += 10;
-                // Add a small success animation
-                document.getElementById('color-word').style.transform = "scale(1.2)";
-                setTimeout(() => document.getElementById('color-word').style.transform = "scale(1)", 200);
-            } else {
-                taskScore -= 5; // Penalty for wrong answer
-                alert('Oops! आपको शब्द का "रंग" चुनना था, "शब्द" नहीं! 🤯');
-            }
-            updateScore();
-            nextTaskRound();
+        function getPos(e) {
+            let rect = canvas.getBoundingClientRect();
+            return {
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top
+            };
         }
 
-        function updateScore() {
-            document.getElementById('task-score').innerText = `Score: ${taskScore}`;
+        function startDraw(e) {
+            isDrawing = true;
+            let pos = getPos(e);
+            ctx.beginPath();
+            ctx.moveTo(pos.x, pos.y);
         }
 
-        // Initialize the first game on load
-        window.onload = initMemoryGame;
+        function draw(e) {
+            if (!isDrawing) return;
+            let pos = getPos(e);
+            ctx.lineWidth = 10;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = '#00BCD4';
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+        }
 
+        function stopDraw() { isDrawing = false; }
+        function clearCanvas() { playClickSound(); renderLetterTracing(); }
+
+        // --- Color Brain Task ---
+        const colorList = [
+            { name: 'RED', hex: '#E74C3C' },
+            { name: 'BLUE', hex: '#3498DB' },
+            { name: 'GREEN', hex: '#2ECC71' },
+            { name: 'YELLOW', hex: '#F1C40F' }
+        ];
+        let colorTargetHex = '', colorScore = 0;
+
+        function initColorTask() {
+            colorScore = 0;
+            document.getElementById('color-score').innerText = colorScore;
+            nextColorRound();
+        }
+
+        function nextColorRound() {
+            let textObj = colorList[Math.floor(Math.random() * colorList.length)];
+            let colorObj = colorList[Math.floor(Math.random() * colorList.length)];
+            
+            let wordEl = document.getElementById('color-word');
+            wordEl.innerText = textObj.name;
+            wordEl.style.color = colorObj.hex;
+            colorTargetHex = colorObj.hex;
+
+            let opts = document.getElementById('color-options');
+            opts.innerHTML = '';
+            colorList.forEach(c => {
+                let btn = document.createElement('button');
+                btn.className = 'opt-btn';
+                btn.innerText = c.name;
+                btn.onclick = () => {
+                    if(c.hex === colorTargetHex) {
+                        // Sahi Answer Sound!
+                        playCorrectSound();
+                        colorScore += 10;
+                    } else {
+                        // Galat Answer Sound!
+                        playWrongSound();
+                        colorScore = Math.max(0, colorScore - 5);
+                    }
+                    document.getElementById('color-score').innerText = colorScore;
+                    nextColorRound();
+                };
+                opts.appendChild(btn);
+            });
+        }
+
+        // Default Load
+        initMatchGame();
     </script>
 </body>
 </html>
